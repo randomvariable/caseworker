@@ -1,0 +1,7 @@
+db:
+  image: postgres:10.5
+  ports:
+    - "5432"
+  environment:
+    - POSTGRES_USER=msc
+    - POSTGRES_PASSWORD=password

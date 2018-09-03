@@ -1,0 +1,3 @@
+{:executable-path "sass"
+ :input-dir "src/sass/"
+ :output-dir "resources/public/css/compiled"}

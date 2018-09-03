@@ -1,0 +1,10 @@
+.sass-cache
+/*.log
+.DS_Store
+.nrepl-port
+.lein-*
+/target
+/*-init.clj
+/resources/public/js/compiled
+out
+figwheel_server.log
