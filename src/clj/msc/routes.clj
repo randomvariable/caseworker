@@ -9,7 +9,8 @@
 (defn routes
   [system]
   (compojure/api
-    {:coercion :spec}
+    {:components system
+     :coercion :spec}
 
     (route-middleware [cookies/wrap-cookies]
 
@@ -24,6 +25,6 @@
         (response/resource-response "login.html" {:root "public"}))
 
       (context "/api" []
-        #'sessions/routes)
+        #'sessions/session-routes)
 
       (route/resources "/"))))

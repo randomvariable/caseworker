@@ -38,12 +38,14 @@
             [healthunlocked/lein-docker-compose "0.1.4"]]
   :min-lein-version "2.5.3"
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
+  :test-paths ["test/clj" "test/cljc" "test/cljs"]
   :uberjar-name "msc.jar"
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "test/js"]
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.10"]
                                   [figwheel-sidecar "0.5.16"]
                                   [reloaded.repl "0.2.4"]
-                                  [re-frisk "0.5.4"]]
+                                  [re-frisk "0.5.4"]
+                                  [ring/ring-mock "0.3.2"]]
                    :source-paths ["src/clj" "src/cljc" "src/cljs" "dev/src"]
                    :resource-paths ["dev/resources"]
                    :plugins [[lein-figwheel "0.5.16"]

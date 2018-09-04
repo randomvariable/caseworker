@@ -5,7 +5,7 @@
             [ring.util.response :as response]
             [taoensso.timbre :as log]))
 
-(defroutes routes
+(defroutes session-routes
   (POST "/session" []
     :body-params [google-auth-token :- ::s/google-auth-token]
     :return {:success boolean?}
