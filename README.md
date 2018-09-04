@@ -1,19 +1,29 @@
 # msc
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+Administration software for Migrant Support Centres.
 
 ## Development Mode
+
+To run msc locally you will need:
+
+ * docker/docker-compose
+ * leiningen
+ * sass
+
+If you want to be able to connect to the local dev database, you'll need `psql` too (you can use a docker container for this if you prefer).
 
 ### Run application:
 
 ```
-lein clean
-lein figwheel dev
+docker-compose up -d                    # start service dependencies
+lein do clean, cljsbuild once dev, repl # make sure you have a fresh CLJS build and start the REPL
+user=> (go)                             ;; start the app (including figwheel and sass watcher components)
 ```
 
-Figwheel will automatically push cljs changes to the browser.
+Sass will automatically rebuild any changed files in `src/sass`.
+Figwheel will automatically push cljs or sass changes to the browser.
 
-Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
+Browse to [http://localhost:9000](http://localhost:9000) to see the running app.
 
 ### Run tests:
 
@@ -33,33 +43,10 @@ lein doo chrome-headless test once
 
 Please note that [doo](https://github.com/bensu/doo) can be configured to run cljs.test in many JS environments (phantom, chrome, ie, safari, opera, slimer, node, rhino, or nashorn).
 
-## Production Build
+## Deploying to staging
 
-```
-lein clean
-lein with-profile prod uberjar
-```
+TBD, probably heroku
 
-That should compile the clojurescript code first, and then create the standalone jar.
+## Deploying to production
 
-When you run the jar you can set the port the ring server will use by setting the environment variable PORT.
-If it's not set, it will run on port 3000 by default.
-
-To deploy to heroku, first create your app:
-
-```
-heroku create
-```
-
-Then deploy the application:
-
-```
-git push heroku master
-```
-
-To compile clojurescript to javascript:
-
-```
-lein clean
-lein cljsbuild once min
-```
+TBD

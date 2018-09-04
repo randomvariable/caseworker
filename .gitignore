@@ -8,3 +8,4 @@
 /resources/public/js/compiled
 out
 figwheel_server.log
+node_modules
