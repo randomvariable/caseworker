@@ -10,7 +10,14 @@
   [system]
   (compojure/api
     {:components system
-     :coercion :spec}
+     :coercion :spec
+     :swagger {:ui "/docs"
+               :spec "/swagger.json"
+               :data {:info {:title "MSC API"
+                             :description "API Backend to MSC"}
+                      :tags [{:name "api", :description "some apis"}]
+                      :consumes ["application/json"]
+                      :produces ["application/json"]}}}
 
     (route-middleware [cookies/wrap-cookies]
 
@@ -23,4 +30,5 @@
         (GET "/login"  [] (response/resource-response "login.html" {:root "public"}))
         (GET "/health" [] (response/response "OK"))
 
-        (route/resources "/")))))
+        (route/resources "/")
+        (route/not-found "404 Not found")))))

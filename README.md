@@ -52,3 +52,7 @@ TBD, probably heroku
 ## Deploying to production
 
 TBD
+
+## API Docs
+
+When you have the app running, visit [http://localhost:9000](http://localhost:9000) to see Swagger docs for the API.
