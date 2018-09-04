@@ -1,6 +1,6 @@
 (ns msc.routes
   (:require [compojure.api.core :refer [route-middleware]]
-            [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context]]
+            [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context undocumented]]
             [ring.middleware.cookies :as cookies]
             [compojure.route :as route]
             [msc.api.session.routes :as sessions]
@@ -14,17 +14,13 @@
 
     (route-middleware [cookies/wrap-cookies]
 
-      (GET "/health" []
-        (-> (response/response "OK")
-            (response/content-type "text/plain; charset=utf-8")))
-
-      (GET "/" []
-        (response/resource-response "index.html" {:root "public"}))
-
-      (GET "/login" []
-        (response/resource-response "login.html" {:root "public"}))
-
       (context "/api" []
         #'sessions/session-routes)
 
-      (route/resources "/"))))
+      (undocumented
+
+        (GET "/"       [] (response/resource-response "index.html" {:root "public"}))
+        (GET "/login"  [] (response/resource-response "login.html" {:root "public"}))
+        (GET "/health" [] (response/response "OK"))
+
+        (route/resources "/")))))

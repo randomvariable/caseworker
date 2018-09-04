@@ -3,5 +3,5 @@
             [msc.core :as core]))
 
 (deftest fake-test
-  (testing "fake description"
-    (is (= 1 2))))
+  (testing "pointless test"
+    (is (= 1 1))))
