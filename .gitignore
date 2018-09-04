@@ -6,6 +6,7 @@
 /target
 /*-init.clj
 /resources/public/js/compiled
+/resources/public/css/compiled
 out
 figwheel_server.log
 node_modules
