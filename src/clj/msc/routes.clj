@@ -1,4 +1,4 @@
-(ns msc.api.routes
+(ns msc.routes
   (:require [compojure.api.core :refer [route-middleware]]
             [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context]]
             [ring.middleware.cookies :as cookies]

@@ -2,7 +2,7 @@
   (:require [com.stuartsierra.component :as component]
             [msc.components.handler :as handler]
             [msc.components.postgres :as postgres]
-            [msc.api.routes :as routes]
+            [msc.routes :as routes]
             [ring.component.jetty :as jetty]))
 
 (defn make-system
