@@ -1,5 +1,7 @@
 # msc
 
+[![Build Status](https://semaphoreci.com/api/v1/walmag/msc/branches/master/badge.svg)](https://semaphoreci.com/walmag/msc)
+
 Administration software for Migrant Support Centres.
 
 ## Development Mode
@@ -15,7 +17,7 @@ If you want to be able to connect to the local dev database, you'll need `psql` 
 ### Run application:
 
 ```
-docker-compose up -d                    # start service dependencies
+make up                                 # start service dependencies
 lein do clean, cljsbuild once dev, repl # make sure you have a fresh CLJS build and start the REPL
 user=> (go)                             ;; start the app (including figwheel and sass watcher components)
 ```
