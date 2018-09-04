@@ -9,3 +9,9 @@ sass:
 		--style compressed \
 		src/sass/application.sass \
 		resources/public/css/compiled/application.css
+
+implode:
+	docker-compose stop && docker-compose rm
+
+up:
+	docker-compose up -d

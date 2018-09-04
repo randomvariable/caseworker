@@ -34,27 +34,39 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="174928214934-m0rbjmumbsa0p5ubtuq7ljpe60evoen9.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style type="text/css">
+    .g-signin2{
+      width: 100%;
+    }
+
+    .g-signin2 > div{
+      margin: 0 auto;
+    }
+    </style>
   </head>
   <body>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <form id="auth-form" action="/api/session" method="post">
-      <input id="google-auth-token" name="google-auth-token" type="hidden" value="" />
-    </form>
+    <div class="container">
+      <div class="col-md-4 offset-md-4 shadow" style="margin-top: 30vh; background: #efefef; border: 1px solid: 999; border-radius: 10px; padding: 15px; text-align: center;">
+        <h1 style="font-size: 1.5em; font-family: Roboto, sans-serif; font-weight: 700; text-align: center;">
+          <img src="/img/logo-small.png" style="height: 30px;" /> WMAG Support Centre
+        </h1>
+        <p>Sign in using your linked Google account by clicking the button below.</p>
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">Sign in</div>
+      </div>
+    </div>
     <script>
       function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        document.getElementById('google-auth-token').value = id_token;
-        document.getElementById('auth-form').submit();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/session');
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            alert('Google sign-in failed - please try again.');
+          } else {
+            window.location = '/';
+          }
+        };
+        xhr.send(JSON.stringify({'google-auth-token': googleUser.getAuthResponse().id_token}));
       };
     </script>
   </body>

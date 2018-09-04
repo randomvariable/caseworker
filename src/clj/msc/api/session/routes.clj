@@ -5,11 +5,11 @@
             [ring.util.response :as response]
             [taoensso.timbre :as log]))
 
-(defroutes routes
+(defroutes session-routes
   (POST "/session" []
-    :form-params [google-auth-token :- ::s/google-auth-token]
-    :return nil?
-    (-> (response/redirect "/")
+    :body-params [google-auth-token :- ::s/google-auth-token]
+    :return {:success boolean?}
+    (-> (response/response {:success true})
         (response/set-cookie "MSC_GOOGLE_AUTH" google-auth-token
                              {:expires "Tue, 19 Jan 2038 00:00:01 GMT"
                               :path "/"

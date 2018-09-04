@@ -1,0 +1,3 @@
+CREATE USER msc_test PASSWORD 'password';
+CREATE DATABASE msc_test;
+GRANT ALL PRIVILEGES ON DATABASE msc_test TO msc_test;

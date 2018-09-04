@@ -1,0 +1,63 @@
+{
+  "src/clj/msc/*/handlers.clj": {
+    "type": "handlers",
+    "template": [
+      "(ns msc.{dot|hyphenate}.handlers",
+      "  (:require [msc.{dot|hyphenate}.queries :as q]",
+      "            [taoensso.timbre :as log]))",
+      ""
+    ]
+  },
+  "src/clj/msc/*/routes.clj": {
+    "type": "routes",
+    "template": [
+      "(ns msc.{dot|hyphenate}.routes",
+      "  (:require [compojure.api.sweet :refer [defroutes context GET PUT POST DELETE]]",
+      "            [msc.{dot|hyphenate}.handlers :as h]",
+      "            [msc.spec.{dot|hyphenate} :as s]",
+      "            [ring.util.response :as response]",
+      "            [schema.core :as s]",
+      "            [taoensso.timbre :as log]))",
+      "",
+      "(defroutes {basename|hyphenate}-routes",
+      "  )"
+    ]
+  },
+  "src/cljc/msc/spec/*.clj": {
+    "type": "specs",
+    "template": [
+      "(ns msc.spec.{dot|hyphenate}",
+      "  (:require [clojure.spec.alpha :as s]",
+      "            [spec-tools.spec :as spec]]))",
+      ""
+    ]
+  },
+  "src/clj/*.clj": {
+    "alternate": "test/clj/{}_test.clj",
+    "type": "source",
+    "template": [
+      "(ns {dot|hyphenate}",
+      "  (:require [msc.util :as u]",
+      "            [taoensso.timbre :as log]))",
+      ""
+    ]
+  },
+  "test/clj/*_test.clj": {
+    "alternate": "src/clj/{}.clj",
+    "type": "test",
+    "template": [
+      "(ns {dot|hyphenate}-test",
+      "  (:require [{dot|hyphenate} :as {basename|hyphenate}]",
+      "            [clojure.test :as t :refer [deftest testing is are run-tests]]))",
+      ""
+    ]
+  },
+  "resources/migrations/*.up.sql": {
+    "alternate": "resources/migrations/{}.down.sql",
+    "type": "migration"
+  },
+  "resources/migrations/*.down.sql": {
+    "alternate": "resources/migrations/{}.up.sql",
+    "type": "rollback"
+  }
+}

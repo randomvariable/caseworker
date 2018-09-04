@@ -1,4 +1,4 @@
-(ns msc.api.routes
+(ns msc.routes
   (:require [compojure.api.core :refer [route-middleware]]
             [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context]]
             [ring.middleware.cookies :as cookies]
@@ -9,7 +9,8 @@
 (defn routes
   [system]
   (compojure/api
-    {:coercion :spec}
+    {:components system
+     :coercion :spec}
 
     (route-middleware [cookies/wrap-cookies]
 
@@ -24,6 +25,6 @@
         (response/resource-response "login.html" {:root "public"}))
 
       (context "/api" []
-        #'sessions/routes)
+        #'sessions/session-routes)
 
       (route/resources "/"))))
