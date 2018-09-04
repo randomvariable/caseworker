@@ -15,7 +15,6 @@
                :spec "/swagger.json"
                :data {:info {:title "MSC API"
                              :description "API Backend to MSC"}
-                      :tags [{:name "api", :description "some apis"}]
                       :consumes ["application/json"]
                       :produces ["application/json"]}}}
 
