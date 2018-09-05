@@ -1,33 +1,51 @@
 (ns msc.api.session.routes-test
   (:require [clojure.test :as t :refer [deftest testing is are run-tests]]
+            [clojure.spec.alpha :as spec]
+            [clojure.spec.test.alpha :as spec-test]
+            [expound.alpha :as expound] 
             [msc.routes :as routes]
+            [msc.spec.session :as s]
             [msc.test-helper :as th]
             [ring.mock.request :as mock]))
 
-(deftest create-session-test
-  (testing "It stores the given google token in a cookie"
-    (th/with-test-system [{:keys [app] :as system}]
+(defn contains-session-cookie?
+  []
+  #(some (partial re-find (re-pattern (str "MSC_GOOGLE_AUTH=" (-> % :args :token) ";")))
+         (get-in % [:ret :headers "Set-Cookie"])))
 
-      (let [{:keys [status headers body]}
-            (-> (mock/request :post "/api/session")
-                (mock/json-body {:google-auth-token "abc-123"})
-                (th/test-handler system))]
+(defn expires-session-cookie?
+  []
+  #(some (partial re-find (re-pattern #"MSC_GOOGLE_AUTH=;Expires=Thu, 01 Jan 1970"))
+         (get-in % [:ret :headers "Set-Cookie"])))
 
-        (is (= 200 status))
-        (is (= {:success true} body))
-        (is (some #(re-find #"MSC_GOOGLE_AUTH=abc-123" %)
-                            (get headers "Set-Cookie")))))))
+(deftest session-test
+  (th/with-test-system
+    [system]
 
-(deftest delete-session-test
-  (testing "It clears the session cookie by setting its expiry to the start of time"
-    (th/with-test-system [{:keys [app] :as system}]
+    (th/integration-test
+      "Sessions are stored in a cookie when created."
+      [token]
 
-      (let [{:keys [status headers body]}
-            (-> (mock/request :delete "/api/session")
-                (mock/header "Cookie" "MSC_GOOGLE_AUTH_TOKEN=abc-123")
-                (th/test-handler system))]
+      :test (-> (mock/request :post "/api/session")
+                (mock/json-body {:google-auth-token token})
+                (th/test-handler system))
 
-        (is (= 200 status))
-        (is (= {:success true} body))
-        (is (some #(re-find #"MSC_GOOGLE_AUTH=;Expires=Thu, 01 Jan 1970 00:00:01" %)
-                            (get headers "Set-Cookie")))))))
+      :spec (spec/fspec :args (spec/cat :token ::s/google-auth-token)
+                        :ret  (spec/keys :req-un [::status ::headers ::body])
+                        :fn   (spec/and (th/has-status? 200)
+                                        (th/has-body? {:success true})
+                                        (contains-session-cookie?))))
+
+    (th/integration-test
+      "Sessions cookies are removed when the session is deleted."
+      [token]
+
+      :test (-> (mock/request :delete "/api/session")
+                (mock/header "Cookie" (str "MSC_GOOGLE_AUTH_TOKEN=" token ";"))
+                (th/test-handler system))
+
+      :spec (spec/fspec :args (spec/cat :token ::s/google-auth-token)
+                        :ret  (spec/keys :req-un [::status ::headers ::body])
+                        :fn   (spec/and (th/has-status? 200)
+                                        (th/has-body? {:success true})
+                                        (expires-session-cookie?))))))
