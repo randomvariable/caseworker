@@ -24,28 +24,24 @@
 
     (th/integration-test
       "Sessions are stored in a cookie when created."
-      [token]
+      [token ::s/google-auth-token]
 
       :test (-> (mock/request :post "/api/session")
                 (mock/json-body {:google-auth-token token})
                 (th/test-handler system))
 
-      :spec (spec/fspec :args (spec/cat :token ::s/google-auth-token)
-                        :ret  (spec/keys :req-un [::status ::headers ::body])
-                        :fn   (spec/and (th/has-status? 200)
-                                        (th/has-body? {:success true})
-                                        (contains-session-cookie?))))
+      :spec (spec/and (th/has-status? 200)
+                      (th/has-body? {:success true})
+                      (contains-session-cookie?)))
 
     (th/integration-test
       "Sessions cookies are removed when the session is deleted."
-      [token]
+      [token ::s/google-auth-token]
 
       :test (-> (mock/request :delete "/api/session")
                 (mock/header "Cookie" (str "MSC_GOOGLE_AUTH_TOKEN=" token ";"))
                 (th/test-handler system))
 
-      :spec (spec/fspec :args (spec/cat :token ::s/google-auth-token)
-                        :ret  (spec/keys :req-un [::status ::headers ::body])
-                        :fn   (spec/and (th/has-status? 200)
-                                        (th/has-body? {:success true})
-                                        (expires-session-cookie?))))))
+      :spec (spec/and (th/has-status? 200)
+                      (th/has-body? {:success true})
+                      (expires-session-cookie?)))))

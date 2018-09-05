@@ -41,13 +41,15 @@
          (component/stop system#)))))
 
 (defmacro integration-test
-  [description args & {:keys [test spec]}]
-  `(clojure.test/testing ~description
-     (let [test-fn#   (fn [~@args] ~test)
-           test-spec# ~spec
-           result#    (spec-test/check-fn test-fn# test-spec#)]
-       (clojure.test/is (true? (or (not (:failure result#))
-                                   (expound/explain-result result#)))))))
+  [description args-and-specs & {:keys [test spec]}]
+  (let [args      (take-nth 2 args-and-specs)
+        arg-specs (interleave (map keyword args) (take-nth 2 (rest args-and-specs)))]
+    `(clojure.test/testing ~description
+       (let [test-fn#   (fn [~@args] ~test)
+             test-spec# (spec/fspec :args (spec/cat ~@arg-specs) :fn ~spec)
+             result#    (spec-test/check-fn test-fn# test-spec#)]
+         (clojure.test/is (true? (or (not (:failure result#))
+                                     (expound/explain-result result#))))))))
 
 (defn has-status?
   [status]
