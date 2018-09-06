@@ -6,4 +6,5 @@
       :user        "msc"
       :password    "password"}
  :environment "development"
+ :google-client-id "174928214934-m0rbjmumbsa0p5ubtuq7ljpe60evoen9.apps.googleusercontent.com"
  :jetty {:port 9000}}

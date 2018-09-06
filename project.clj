@@ -8,6 +8,8 @@
                  [com.stuartsierra/component "0.3.2"]
                  [com.taoensso/timbre "4.10.0"]
                  [compojure "1.6.1"]
+                 [com.google.api-client/google-api-client "1.25.0"]
+                 [com.google.oauth-client/google-oauth-client "1.25.0"]
                  [expound "0.7.1"]
                  [metosin/compojure-api "2.0.0-alpha25"]
                  [metosin/spec-tools "0.7.1"]

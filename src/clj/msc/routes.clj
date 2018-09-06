@@ -1,9 +1,11 @@
 (ns msc.routes
   (:require [compojure.api.core :refer [route-middleware]]
             [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context undocumented]]
-            [ring.middleware.cookies :as cookies]
             [compojure.route :as route]
             [msc.api.session.routes :as sessions]
+            [msc.google-auth :as gauth]
+            [msc.middleware.auth :as auth]
+            [ring.middleware.cookies :as cookies]
             [ring.util.response :as response]))
 
 (defn routes
@@ -21,13 +23,23 @@
     (route-middleware [cookies/wrap-cookies]
 
       (context "/api" []
-        #'sessions/session-routes)
+        #'sessions/session-routes
+        (route-middleware [auth/wrap-auth]))
 
       (undocumented
 
-        (GET "/"       [] (response/resource-response "index.html" {:root "public"}))
-        (GET "/login"  [] (response/resource-response "login.html" {:root "public"}))
-        (GET "/health" [] (response/response "OK"))
+        (GET "/" [:as req]
+          (if (gauth/verify-token (get-in req [:cookies "MSC_GOOGLE_AUTH" :value]))
+            (response/resource-response "index.html" {:root "public"})
+            (response/redirect "/login")))
+
+        (GET "/login" [:as req]
+          (if (gauth/verify-token (get-in req [:cookies "MSC_GOOGLE_AUTH" :value]))
+            (response/redirect "/")
+            (response/resource-response "login.html" {:root "public"})))
+
+        (GET "/health" []
+          (response/response "OK"))
 
         (route/resources "/")
         (route/not-found "404 Not found")))))
