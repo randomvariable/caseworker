@@ -7,7 +7,8 @@
 /*-init.clj
 /resources/public/js/compiled/*
 !/resources/public/js/compiled/.keep
-/resources/public/css/compiled
+/resources/public/css/compiled/*
+!/resources/public/css/compiled/.keep
 out
 figwheel_server.log
 node_modules
