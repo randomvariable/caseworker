@@ -5,7 +5,8 @@
 .lein-*
 /target
 /*-init.clj
-/resources/public/js/compiled
+/resources/public/js/compiled/*
+!/resources/public/js/compiled/.keep
 /resources/public/css/compiled
 out
 figwheel_server.log
