@@ -16,18 +16,21 @@
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.339"]
                  [org.clojure/java.jdbc "0.7.8"]
-                 [org.clojure/spec.alpha "0.2.168"]
+                 [org.clojure/spec.alpha "0.2.176"]
                  [org.postgresql/postgresql "42.2.5"]
                  [prismatic/schema "1.1.9"]
                  [ragtime "0.7.2"]
                  [raven-clj "1.5.2" :exclusions [cheshire commons-logging clj-http]]
-                 [re-frame "0.10.5" :exclusions [org.clojure/tools.logging]]
+                 [re-frame "0.10.6" :exclusions [org.clojure/tools.logging]]
                  [reagent "0.8.1"]
                  [ring "1.6.3"]
                  [ring-jetty-component "0.3.1"]
                  [secretary "1.2.3"]
                  [venantius/accountant "0.2.4"]
-                 [yogthos/config "1.1.1"]]
+                 [yogthos/config "1.1.1"]
+
+                 ;; dependency clash fixes
+                  [com.google.guava/guava "22.0"]]
 
   :repl-options {:init-ns user}
 
