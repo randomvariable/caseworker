@@ -26,7 +26,6 @@
                  [secretary "1.2.3"]
                  [venantius/accountant "0.2.4"]
                  [yogthos/config "1.1.1"]
-                 [yogthos/config "1.1.1"]
                  ;; dependency clash fixes
                  [lein-create-template "0.2.0" :exclusions [org.clojure/clojure]]]
 
@@ -35,6 +34,7 @@
   :plugins [[lein-ancient "0.6.15"]
             [lein-cljsbuild "1.1.7"]
             [lein-environ "1.1.0"]
+            [lein-shell "0.5.0"]
             [healthunlocked/lein-docker-compose "0.1.4"]]
   :min-lein-version "2.5.3"
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
@@ -52,7 +52,8 @@
                              [lein-doo "0.1.10"]]}
              :uberjar {:aot :all
                        :source-paths ["src/clj" "src/cljc"]
-                       :prep-tasks [["cljsbuild" "once" "min"] "compile"]}
+                       :prep-tasks [["cljsbuild" "once" "min"]
+                                    ["shell" "sass" "src/sass/application.sass" "resources/public/css/compiled/application.css"]]}
              :prod {:dependencies [[day8.re-frame/tracing-stubs "0.5.1"]]}}
 
   :cljsbuild
