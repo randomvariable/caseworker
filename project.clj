@@ -38,7 +38,6 @@
             [lein-cljsbuild "1.1.7"]
             [lein-environ "1.1.0"]
             [lein-shell "0.5.0"]
-            [healthunlocked/lein-docker-compose "0.2.0"]
             ;; dependency clash fixes
             [lein-create-template "0.2.0" :exclusions [org.clojure/clojure]]]
   :min-lein-version "2.5.3"
@@ -54,7 +53,8 @@
                                   [ring/ring-mock "0.3.2"]]
                    :source-paths ["src/clj" "src/cljc" "src/cljs" "dev/src"]
                    :resource-paths ["dev/resources"]
-                   :plugins [[lein-figwheel "0.5.16"]
+                   :plugins [[healthunlocked/lein-docker-compose "0.2.0"]
+                             [lein-figwheel "0.5.16"]
                              [lein-doo "0.1.10"]]
                    :prep-tasks ["docker-compose"]}
              :uberjar {:aot :all
