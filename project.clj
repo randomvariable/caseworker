@@ -38,7 +38,7 @@
             [lein-cljsbuild "1.1.7"]
             [lein-environ "1.1.0"]
             [lein-shell "0.5.0"]
-            [healthunlocked/lein-docker-compose "0.2.0-SNAPSHOT"]
+            [healthunlocked/lein-docker-compose "0.2.0"]
             ;; dependency clash fixes
             [lein-create-template "0.2.0" :exclusions [org.clojure/clojure]]]
   :min-lein-version "2.5.3"
