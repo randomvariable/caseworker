@@ -1,4 +1,4 @@
-(defproject msc "0.1.0-SNAPSHOT"
+(defproject caseworker "0.1.0-SNAPSHOT"
   :dependencies [[camel-snake-kebab "0.4.0"]
                  [cljs-ajax "0.7.4"]
                  [cljsjs/react-bootstrap "0.31.5-0" :exclusions [cljsjs/react cljsjs/react-dom]]
@@ -43,7 +43,7 @@
   :min-lein-version "2.5.3"
   :source-paths ["src/clj" "src/cljc" "src/cljs"]
   :test-paths ["test/clj" "test/cljc" "test/cljs"]
-  :uberjar-name "msc.jar"
+  :uberjar-name "caseworker.jar"
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "test/js"]
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.10"]
                                   [figwheel-sidecar "0.5.16"]
@@ -67,8 +67,8 @@
   {:builds
    [{:id           "dev"
      :source-paths ["src/cljs" "src/cljc"]
-     :figwheel     {:on-jsload "msc.core/mount-root"}
-     :compiler     {:main                 msc.core
+     :figwheel     {:on-jsload "caseworker.core/mount-root"}
+     :compiler     {:main                 caseworker.core
                     :output-to            "resources/public/js/compiled/app.js"
                     :output-dir           "resources/public/js/compiled/out"
                     :asset-path           "js/compiled/out"
@@ -79,7 +79,7 @@
     {:id           "min"
      :source-paths ["src/cljs" "src/cljc"]
      :jar true
-     :compiler     {:main            msc.core
+     :compiler     {:main            caseworker.core
                     :output-to       "resources/public/js/compiled/app.js"
                     :optimizations   :advanced
                     :closure-defines {goog.DEBUG false}
@@ -88,10 +88,10 @@
 
     {:id           "test"
      :source-paths ["src/cljs" "src/cljc" "test/cljs"]
-     :compiler     {:main          msc.runner
+     :compiler     {:main          caseworker.runner
                     :output-to     "resources/public/js/compiled/test.js"
                     :output-dir    "resources/public/js/compiled/test/out"
                     :optimizations :none}}]}
 
-  :main ^:skip-aot msc.core
+  :main ^:skip-aot caseworker.core
   :target-path "target/%s")

@@ -3,11 +3,11 @@
             [clojure.java.jdbc :as jdbc]
             [clojure.repl :refer :all]
             [clojure.test :refer [run-tests run-all-tests]]
-            [msc.components.figwheel :as figwheel]
-            [msc.components.sass :as sass]
-            [msc.config :as c]
-            [msc.migrations :refer [migrate! rollback!]]
-            [msc.system :as system]
+            [caseworker.components.figwheel :as figwheel]
+            [caseworker.components.sass :as sass]
+            [caseworker.config :as c]
+            [caseworker.migrations :refer [migrate! rollback!]]
+            [caseworker.system :as system]
             [reloaded.repl :as repl :refer [system go init start stop reset reset-all]]))
 
 (defn make-dev-system

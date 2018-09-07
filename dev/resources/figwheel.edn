@@ -2,9 +2,9 @@
  :build-ids ["dev"]
  :all-builds
  [{:id "dev"
-   :figwheel {:on-jsload "msc.core/mount-root"}
+   :figwheel {:on-jsload "caseworker.core/mount-root"}
    :source-paths ["src/cljs" "src/cljc"]
-   :compiler {:main "msc.core"
+   :compiler {:main "caseworker.core"
               :asset-path "js/compiled/out"
               :output-to "resources/public/js/compiled/app.js"
               :output-dir "resources/public/js/compiled/out"

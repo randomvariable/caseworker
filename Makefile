@@ -1,7 +1,7 @@
 DB_PORT = $$(docker-compose port db 5432 | awk -F':' '{print $$2}' &2> /dev/null || true)
 
 db:
-	PGPASSWORD=password psql -U msc --port $(DB_PORT) -h 127.0.0.1 msc
+	PGPASSWORD=password psql -U caseworker --port $(DB_PORT) -h 127.0.0.1 caseworker
 
 sass:
 	mkdir -p resources/public/css/compiled && \
@@ -15,3 +15,7 @@ implode:
 
 up:
 	docker-compose up -d
+
+.PHONY: test
+test:
+	lein do test, doo chrome-headless test once
