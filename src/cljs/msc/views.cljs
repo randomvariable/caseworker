@@ -31,9 +31,9 @@
 (defn- panels [panel-name]
   [:div
    [:nav.navbar.navbar-dark.fixed-top.bg-blue.flex-md-nowrap.p-0.shadow
-    [:a.navbar-brand.col-sm-3.col-md-2.mr-0 {:href "#"}
-     [:img {:src "/img/logo-small.png" :style {:height "20px" :margin "-7px 5px -5px 0"}}]
-     " WMAG Support Centre"]
+    [:a.navbar-brand.col-sm-3.col-md-2.mr-0 {:href "#" :style {:text-transform "uppercase" :font-weight "bold" :font-family "Arial" :font-size "1.2em" :letter-spacing "2px"}}
+     [:img {:src "/img/logo-small.png" :style {:height "30px" :margin "-7px 5px -5px 0"}}]
+     " Caseworker"]
     [:input.form-control.form-control-dark.w-100
      {:aria-label "Search", :placeholder "Search", :type "text"}]
     [:ul.navbar-nav.px-3
