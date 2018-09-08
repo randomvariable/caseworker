@@ -7,61 +7,68 @@
     [caseworker.layout.subs :as s]
     [caseworker.re-frame :refer [with-subs]]))
 
-(defn _navbar
-  [navbar-expanded? open-dropdown]
-  [:nav.navbar.navbar-expand-md.fixed-top.navbar-dark.bg-dark
-   {:style {:border-bottom "5px solid #ccbb55"}}
-   [:a.navbar-brand {:href "/"} [:img {:src "/img/logo-with-text.svg"}]]       
-   [:button.navbar-toggler.p-0.border-0
-    {:data-toggle "offcanvas"
-     :type "button"
-     :on-click #(do (re-frame/dispatch [::e/toggle-navbar])
-                    (.stopPropagation %))}
-    [:span.navbar-toggler-icon]]
-   [:div.navbar-collapse.offcanvas-collapse (when navbar-expanded? {:class "open"})
+(defn nav-item
+  [current-page page-name url icon-class label]
+  [:li.nav-item (when (= page-name current-page) {:class "active"})
+   [:a.nav-link
+    {:href (str "#" url)}
+    [:span.feather {:class icon-class}] (str " " label)
+    (when (= page-name current-page)
+      [:span.sr-only "(current)"])]])
+
+(defn main-nav
+  []
+  (with-subs [current-page [::s/current-page]]
     [:ul.navbar-nav.mr-auto
-     [:li.nav-item.active
-      [:a.nav-link
-       {:href "#"}
-       [:span.feather.icon-home] " Dashboard"
-       [:span.sr-only "(current)"]]]
-     [:li.nav-item [:a.nav-link {:href "#"} [:span.feather.icon-users] " People"]]
-     [:li.nav-item [:a.nav-link {:href "#"} [:span.feather.icon-file] " Resources"]]
-     [:li.nav-item [:a.nav-link {:href "#"} [:span.feather.icon-bar-chart-2] " Reports"]]]
-    [:ul.navbar-nav.navbar-right
-     [:li.nav-item.dropdown 
-      [:a#dropdown01.nav-link.dropdown-toggle
-       {:aria-expanded "false"
-        :aria-haspopup "true"
-        :data-toggle "dropdown"
-        :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :settings])
-                       (.stopPropagation %))
-        :href "#"}
-       [:span.feather.icon-settings] [:span.d-inline.d-sm-inline.d-md-none " Settings"]]
-      [:div.dropdown-menu.dropdown-menu-right
-       (when (= open-dropdown :settings) {:class "show"})
-       [:a.dropdown-item {:href "#"} "Action"]
-       [:a.dropdown-item {:href "#"} "Another action"]
-       [:a.dropdown-item {:href "#"} "Something else here"]]]
-     [:li.nav-item.dropdown 
-      [:a#dropdown01.nav-link.dropdown-toggle
-       {:aria-expanded "false"
-        :aria-haspopup "true"
-        :data-toggle "dropdown"
-        :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :account])
-                       (.stopPropagation %))
-        :href "#"}
-       [:span.feather.icon-user] [:span.d-inline.d-sm-inline.d-md-none " Account"]]
-      [:div.dropdown-menu.dropdown-menu-right
-       (when (= open-dropdown :account) {:class "show"})
-       [:a.dropdown-item {:href "#" :on-click gauth/logout}
-        "Log out"]]]]]])
+     [nav-item current-page :dashboard "/"          "icon-home"        "Dashboard"]
+     [nav-item current-page :people    "/people"    "icon-users"       "People"]
+     [nav-item current-page :cases     "/cases"     "icon-briefcase"   "Cases"]
+     [nav-item current-page :resources "/resources" "icon-file"        "Resources"]
+     [nav-item current-page :reports   "/reports"   "icon-bar-chart-2" "Reports"]]))
 
 (defn navbar
   []
-  (let [navbar-expanded? (re-frame/subscribe [::s/navbar-expanded?])
-        open-dropdown    (re-frame/subscribe [::s/open-dropdown])]
-    (fn [] [_navbar @navbar-expanded? @open-dropdown])))
+  (with-subs [navbar-expanded? [::s/navbar-expanded?]
+              open-dropdown    [::s/open-dropdown]]
+    [:nav.navbar.navbar-expand-md.fixed-top.navbar-dark.bg-dark
+     {:style {:border-bottom "5px solid #ccbb55"}}
+     [:a.navbar-brand {:href "/"} [:img {:src "/img/logo-with-text.svg"}]]       
+     [:button.navbar-toggler.p-0.border-0
+      {:data-toggle "offcanvas"
+       :type "button"
+       :on-click #(do (re-frame/dispatch [::e/toggle-navbar])
+                      (.stopPropagation %))}
+      [:span.navbar-toggler-icon]]
+     [:div.navbar-collapse.offcanvas-collapse (when navbar-expanded? {:class "open"})
+      [main-nav] 
+      [:ul.navbar-nav.navbar-right
+       [:li.nav-item.dropdown 
+        [:a#dropdown01.nav-link.dropdown-toggle
+         {:aria-expanded "false"
+          :aria-haspopup "true"
+          :data-toggle "dropdown"
+          :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :settings])
+                         (.stopPropagation %))
+          :href "#"}
+         [:span.feather.icon-settings] [:span.d-inline.d-sm-inline.d-md-none " Settings"]]
+        [:div.dropdown-menu.dropdown-menu-right
+         (when (= open-dropdown :settings) {:class "show"})
+         [:a.dropdown-item {:href "#"} "Action"]
+         [:a.dropdown-item {:href "#"} "Another action"]
+         [:a.dropdown-item {:href "#"} "Something else here"]]]
+       [:li.nav-item.dropdown 
+        [:a#dropdown01.nav-link.dropdown-toggle
+         {:aria-expanded "false"
+          :aria-haspopup "true"
+          :data-toggle "dropdown"
+          :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :account])
+                         (.stopPropagation %))
+          :href "#"}
+         [:span.feather.icon-user] [:span.d-inline.d-sm-inline.d-md-none " Account"]]
+        [:div.dropdown-menu.dropdown-menu-right
+         (when (= open-dropdown :account) {:class "show"})
+         [:a.dropdown-item {:href "#" :on-click gauth/logout}
+          "Log out"]]]]]]))
 
 (defn default [& forms]
-  (into [:div [navbar]] forms))
+  [:div [navbar] (into [:div.container-fluid] forms)])

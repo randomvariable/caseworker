@@ -4,4 +4,6 @@
   [:caseworker :layout])
 
 (def default-db
-  {::navbar-open? false})
+  {:navbar-expanded false
+   :current-page    :dashboard
+   :open-dropdown   nil})

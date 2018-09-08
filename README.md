@@ -1,6 +1,6 @@
-# caseworker
+# Caseworker
 
-Administration software for Migrant Support Centres.
+Open source administration software for Caseworkers
 
 ## Development Mode
 

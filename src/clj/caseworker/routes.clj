@@ -15,8 +15,8 @@
      :coercion :spec
      :swagger {:ui "/docs"
                :spec "/swagger.json"
-               :data {:info {:title "MSC API"
-                             :description "API Backend to MSC"}
+               :data {:info {:title "Caseworker API"
+                             :description "API Backend to Caseworker"}
                       :consumes ["application/json"]
                       :produces ["application/json"]}}}
 
@@ -29,12 +29,12 @@
       (undocumented
 
         (GET "/" [:as req]
-          (if (gauth/verify-token (get-in req [:cookies "MSC_GOOGLE_AUTH" :value]))
+          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
             (response/resource-response "index.html" {:root "public"})
             (response/redirect "/login")))
 
         (GET "/login" [:as req]
-          (if (gauth/verify-token (get-in req [:cookies "MSC_GOOGLE_AUTH" :value]))
+          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
             (response/redirect "/")
             (response/resource-response "login.html" {:root "public"})))
 

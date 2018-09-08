@@ -10,12 +10,12 @@
 
 (defn contains-session-cookie?
   []
-  #(some (partial re-find (re-pattern (str "MSC_GOOGLE_AUTH=" (-> % :args :token) ";")))
+  #(some (partial re-find (re-pattern (str "CASEWORKER_GOOGLE_AUTH=" (-> % :args :token) ";")))
          (get-in % [:ret :headers "Set-Cookie"])))
 
 (defn expires-session-cookie?
   []
-  #(some (partial re-find (re-pattern #"MSC_GOOGLE_AUTH=;Expires=Thu, 01 Jan 1970"))
+  #(some (partial re-find (re-pattern #"CASEWORKER_GOOGLE_AUTH=;Expires=Thu, 01 Jan 1970"))
          (get-in % [:ret :headers "Set-Cookie"])))
 
 (deftest session-test
@@ -39,7 +39,7 @@
       [token ::s/google-auth-token]
 
       :test (-> (mock/request :delete "/api/session")
-                (mock/header "Cookie" (str "MSC_GOOGLE_AUTH_TOKEN=" token ";"))
+                (mock/header "Cookie" (str "CASEWORKER_GOOGLE_AUTH_TOKEN=" token ";"))
                 (th/test-handler system))
 
       :spec (spec/and (th/has-status? 200)

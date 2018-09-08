@@ -19,15 +19,20 @@
 
 (defn app-routes []
   (secretary/set-config! :prefix "#")
-  ;; --------------------
-  ;; define routes here
+
   (defroute "/" []
-    (re-frame/dispatch [::events/set-active-panel :home-panel])
-    )
+    (re-frame/dispatch [::events/set-current-page :dashboard]))
 
-  (defroute "/about" []
-    (re-frame/dispatch [::events/set-active-panel :about-panel]))
+  (defroute "/people" []
+    (re-frame/dispatch [::events/set-current-page :people]))
 
+  (defroute "/cases" []
+    (re-frame/dispatch [::events/set-current-page :cases]))
 
-  ;; --------------------
+  (defroute "/resources" []
+    (re-frame/dispatch [::events/set-current-page :resources]))
+
+  (defroute "/reports" []
+    (re-frame/dispatch [::events/set-current-page :reports]))
+
   (hook-browser-navigation!))

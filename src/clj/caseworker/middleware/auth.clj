@@ -4,7 +4,7 @@
 (defn wrap-auth
   [handler]
   (fn [{:keys [headers] :as req}]
-    (if-let [user (gauth/verify-token (get headers "MSC_GOOGLE_AUTH"))]
+    (if-let [user (gauth/verify-token (get headers "CASEWORKER_GOOGLE_AUTH"))]
       (-> (assoc-in req :identity user)
           (handler))
       {:status 401

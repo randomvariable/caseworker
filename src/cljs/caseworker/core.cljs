@@ -15,7 +15,7 @@
 
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
-  (reagent/render [views/main-panel]
+  (reagent/render [views/main-page]
                   (.getElementById js/document "app")))
 
 (defn init-global-listeners

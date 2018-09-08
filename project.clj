@@ -30,7 +30,8 @@
                  [yogthos/config "1.1.1"]
 
                  ;; dependency clash fixes
-                  [com.google.guava/guava "22.0"]]
+                 [fipp "0.6.12"]
+                 [com.google.guava/guava "22.0"]]
 
   :repl-options {:init-ns user}
 

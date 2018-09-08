@@ -14,7 +14,7 @@
       :body-params [google-auth-token :- ::s/google-auth-token]
       :return {:success boolean?}
       (-> (response/response {:success true})
-          (response/set-cookie "MSC_GOOGLE_AUTH" google-auth-token
+          (response/set-cookie "CASEWORKER_GOOGLE_AUTH" google-auth-token
                                {:expires "Tue, 19 Jan 2038 00:00:01 GMT"
                                 :path "/"
                                 :secure (not= "development" (:environment c/env))
@@ -24,5 +24,5 @@
       :summary "Delete the user's current session"
       :return {:success boolean?}
       (-> (response/response {:success true})
-          (response/set-cookie "MSC_GOOGLE_AUTH" ""
+          (response/set-cookie "CASEWORKER_GOOGLE_AUTH" ""
                                {:expires "Thu, 01 Jan 1970 00:00:01 GMT" :path "/"})))))
