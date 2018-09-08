@@ -1,7 +1,5 @@
 # caseworker
 
-[![Build Status](https://semaphoreci.com/api/v1/walmag/caseworker/branches/master/badge.svg)](https://semaphoreci.com/walmag/caseworker)
-
 Administration software for Migrant Support Centres.
 
 ## Development Mode
