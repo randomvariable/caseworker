@@ -1,13 +1,12 @@
 (ns caseworker.core
   (:require
-   [reagent.core :as reagent]
-   [re-frame.core :as re-frame]
-   [caseworker.events :as events]
-   [caseworker.routes :as routes]
-   [caseworker.views :as views]
-   [caseworker.config :as config]
-   ))
-
+    [goog.events :as e]
+    [reagent.core :as reagent]
+    [re-frame.core :as re-frame]
+    [caseworker.events :as events]
+    [caseworker.routes :as routes]
+    [caseworker.views :as views]
+    [caseworker.config :as config]))
 
 (defn dev-setup []
   (when config/debug?
@@ -19,7 +18,13 @@
   (reagent/render [views/main-panel]
                   (.getElementById js/document "app")))
 
+(defn init-global-listeners
+  []
+  (e/listen js/window "click"
+            #(re-frame/dispatch [:caseworker.layout.events/toggle-dropdown nil])))
+
 (defn ^:export init []
+  (init-global-listeners)
   (routes/app-routes)
   (re-frame/dispatch-sync [::events/initialize-db])
   (dev-setup)
