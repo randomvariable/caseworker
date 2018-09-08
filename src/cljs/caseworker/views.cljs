@@ -8,7 +8,8 @@
             [caseworker.dashboard.views :as dashboard]
             [caseworker.people.views :as people]
             [caseworker.reports.views :as reports]
-            [caseworker.resources.views :as resources]))
+            [caseworker.resources.views :as resources]
+            [caseworker.users.views :as users]))
 
 (defn pages
   [page-name]
@@ -18,6 +19,7 @@
     :cases     [layout/default [cases/page]]
     :resources [layout/default [resources/page]]
     :reports   [layout/default [reports/page]]
+    :users     [layout/default [users/page]]
     [:div]))
 
 (defn show-page

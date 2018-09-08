@@ -66,9 +66,13 @@
           :href "#"}
          [:span.feather.icon-user] [:span.d-inline.d-sm-inline.d-md-none " Account"]]
         [:div.dropdown-menu.dropdown-menu-right
-         (when (= open-dropdown :account) {:class "show"})
-         [:a.dropdown-item {:href "#" :on-click gauth/logout}
-          "Log out"]]]]]]))
+         {:class (when (= open-dropdown :account) "show")
+          :style {:min-width "200px" :white-space "nowrap"}}
+         [:span.dropdown-item-text "Russell Dunphy"]
+         [:span.dropdown-item-text "Walthamstow Migrants' Action Group"]
+         [:div.dropdown-divider]
+         [:a.dropdown-item {:href "#/users"} [:span.feather.icon-users] " Manage users"]
+         [:a.dropdown-item {:href "#" :on-click gauth/logout} [:span.feather.icon-log-out] " Log out"]]]]]]))
 
 (defn default [& forms]
   [:div [navbar] (into [:div.container-fluid] forms)])

@@ -35,4 +35,7 @@
   (defroute "/reports" []
     (re-frame/dispatch [::events/set-current-page :reports]))
 
+  (defroute "/users" []
+    (re-frame/dispatch [::events/set-current-page :users]))
+
   (hook-browser-navigation!))

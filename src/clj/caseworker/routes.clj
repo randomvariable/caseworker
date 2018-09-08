@@ -5,6 +5,7 @@
             [caseworker.api.session.routes :as sessions]
             [caseworker.google-auth :as gauth]
             [caseworker.middleware.auth :as auth]
+            [caseworker.spec.organisation :as org]
             [ring.middleware.cookies :as cookies]
             [ring.util.response :as response]))
 
@@ -28,18 +29,22 @@
 
       (undocumented
 
-        (GET "/" [:as req]
-          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
-            (response/resource-response "index.html" {:root "public"})
-            (response/redirect "/login")))
+        (GET "/" []
+          (response/redirect "/login"))
 
         (GET "/login" [:as req]
           (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
-            (response/redirect "/")
+            (response/redirect "/wmag")
             (response/resource-response "login.html" {:root "public"})))
 
         (GET "/health" []
           (response/response "OK"))
+
+        (GET "/:org-code" [:as req]
+          :path-params [org-code :- ::org/org-code]
+          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
+            (response/resource-response "index.html" {:root "public"})
+            (response/redirect "/login")))
 
         (route/resources "/")
         (route/not-found "404 Not found")))))
