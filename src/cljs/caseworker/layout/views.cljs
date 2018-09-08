@@ -78,4 +78,4 @@
          [:a.dropdown-item {:href "#" :on-click gauth/logout} [:span.feather.icon-log-out] " Log out"]]]]]]))
 
 (defn default [& forms]
-  [:div [navbar] (into [:div.container-fluid] forms)])
+  [:div#main-content [navbar] (into [:div.container-fluid{:style {:height "100%"}}] forms)])
