@@ -12,3 +12,5 @@
 out
 figwheel_server.log
 node_modules
+nashorn_code_cache
+.cljs_nashorn_repl

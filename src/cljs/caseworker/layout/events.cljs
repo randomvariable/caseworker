@@ -19,5 +19,4 @@
   ::toggle-dropdown
  [(re-frame/path db/path)]
   (fn [db [_ k]]
-    (println k)
     (update db :open-dropdown #(when (not= k %) k))))

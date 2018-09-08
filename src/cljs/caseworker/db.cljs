@@ -1,4 +1,6 @@
-(ns caseworker.db)
+(ns caseworker.db
+  (:require [caseworker.layout.db :as layout]))
 
 (def default-db
-  {:name "re-frame"})
+  {:layout       layout/default-db
+   :current-page :dashboard})

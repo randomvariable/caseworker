@@ -37,7 +37,8 @@
       {:data-toggle "offcanvas"
        :type "button"
        :on-click #(do (re-frame/dispatch [::e/toggle-navbar])
-                      (.stopPropagation %))}
+                      (.stopPropagation %)
+                      (.preventDefault %))}
       [:span.navbar-toggler-icon]]
      [:div.navbar-collapse.offcanvas-collapse (when navbar-expanded? {:class "open"})
       [main-nav] 
@@ -48,7 +49,8 @@
           :aria-haspopup "true"
           :data-toggle "dropdown"
           :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :settings])
-                         (.stopPropagation %))
+                         (.stopPropagation %)
+                         (.preventDefault %))
           :href "#"}
          [:span.feather.icon-settings] [:span.d-inline.d-sm-inline.d-md-none " Settings"]]
         [:div.dropdown-menu.dropdown-menu-right
@@ -62,7 +64,8 @@
           :aria-haspopup "true"
           :data-toggle "dropdown"
           :on-click #(do (re-frame/dispatch [::e/toggle-dropdown :account])
-                         (.stopPropagation %))
+                         (.stopPropagation %)
+                         (.preventDefault %))
           :href "#"}
          [:span.feather.icon-user] [:span.d-inline.d-sm-inline.d-md-none " Account"]]
         [:div.dropdown-menu.dropdown-menu-right

@@ -1,9 +1,8 @@
 (ns caseworker.layout.db)
 
 (def path
-  [:caseworker :layout])
+  [:layout])
 
 (def default-db
-  {:navbar-expanded false
-   :current-page    :dashboard
-   :open-dropdown   nil})
+  {:navbar-expanded? false
+   :open-dropdown    nil})

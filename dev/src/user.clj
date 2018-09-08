@@ -8,6 +8,7 @@
             [caseworker.config :as c]
             [caseworker.migrations :refer [migrate! rollback!]]
             [caseworker.system :as system]
+            [figwheel-sidecar.repl-api :refer [cljs-repl]]
             [reloaded.repl :as repl :refer [system go init start stop reset reset-all]]))
 
 (defn make-dev-system

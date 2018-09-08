@@ -31,7 +31,7 @@
 
                  ;; dependency clash fixes
                  [fipp "0.6.12"]
-                 [com.google.guava/guava "22.0"]]
+                 [com.google.guava/guava "23.0"]]
 
   :repl-options {:init-ns user}
 
@@ -47,11 +47,15 @@
   :uberjar-name "caseworker.jar"
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target" "test/js"]
   :profiles {:dev {:dependencies [[binaryage/devtools "0.9.10"]
+                                  [cider/cider-nrepl "0.18.0"]
+                                  [com.cemerick/piggieback "0.2.2"]
+                                  [day8.re-frame/test "0.1.5"]
                                   [figwheel-sidecar "0.5.16"]
                                   [org.clojure/test.check "0.10.0-alpha3"]
                                   [reloaded.repl "0.2.4"]
                                   [re-frisk "0.5.4"]
                                   [ring/ring-mock "0.3.2"]]
+                   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    :source-paths ["src/clj" "src/cljc" "src/cljs" "dev/src"]
                    :resource-paths ["dev/resources"]
                    :plugins [[healthunlocked/lein-docker-compose "0.2.0"]

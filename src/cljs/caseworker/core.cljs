@@ -1,12 +1,11 @@
 (ns caseworker.core
-  (:require
-    [goog.events :as e]
-    [reagent.core :as reagent]
-    [re-frame.core :as re-frame]
-    [caseworker.events :as events]
-    [caseworker.routes :as routes]
-    [caseworker.views :as views]
-    [caseworker.config :as config]))
+  (:require [goog.events :as e]
+            [reagent.core :as reagent]
+            [re-frame.core :as re-frame]
+            [caseworker.events :as events]
+            [caseworker.routes :as routes]
+            [caseworker.views :as views]
+            [caseworker.config :as config]))
 
 (defn dev-setup []
   (when config/debug?

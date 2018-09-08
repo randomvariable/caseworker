@@ -31,7 +31,7 @@
                 (th/test-handler system))
 
       :spec (spec/and (th/has-status? 200)
-                      (th/has-body? {:success true})
+                      (th/has-body? {:success true :org-code "wmag"})
                       (contains-session-cookie?)))
 
     (th/integration-test
