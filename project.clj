@@ -60,8 +60,7 @@
                    :resource-paths ["dev/resources"]
                    :plugins [[healthunlocked/lein-docker-compose "0.2.0"]
                              [lein-figwheel "0.5.16"]
-                             [lein-doo "0.1.10"]]
-                   :prep-tasks ["docker-compose"]}
+                             [lein-doo "0.1.10"]]}
              :uberjar {:aot :all
                        :source-paths ["src/clj" "src/cljc"]
                        :prep-tasks [["cljsbuild" "once" "min"]
