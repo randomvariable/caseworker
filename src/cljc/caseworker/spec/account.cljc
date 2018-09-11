@@ -13,6 +13,3 @@
 (s/def ::updated-at spec/inst?)
 (s/def ::deleted-by (s/nilable spec/integer?))
 (s/def ::deleted-at (s/nilable spec/inst?))
-
-(s/def ::account
-  (s/keys :req-un [::account-id ::email ::name ::created-by ::created-at ::updated-by ::updated-at]))

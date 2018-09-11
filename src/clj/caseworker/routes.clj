@@ -3,6 +3,7 @@
             [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context undocumented]]
             [compojure.route :as route]
             [caseworker.api.account.routes :as accounts]
+            [caseworker.api.organisation.routes :as organisations]
             [caseworker.api.session.routes :as sessions]
             [caseworker.config :as c]
             [caseworker.middleware.auth :as auth]
@@ -29,12 +30,11 @@
 
       (context "/api" [:as req]
         #'accounts/account-routes
+        #'organisations/organisation-routes
         #'sessions/session-routes)
 
       (undocumented
-
-        (GET "/" []
-          (response/redirect "/login"))
+        (route/resources "/")
 
         (GET "/login" [:as req]
           (if (:identity req)
@@ -44,8 +44,6 @@
 
         (GET "/health" []
           (response/response "OK"))
-
-        (route/resources "/")
 
         (GET "/:org-code" [:as req]
           :path-params [org-code :- ::org/org-code]

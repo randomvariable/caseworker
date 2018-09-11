@@ -3,4 +3,12 @@
                :cljs [cljs.spec.alpha :as s])
             [spec-tools.spec :as spec]))
 
-(s/def ::org-code spec/string?)
+(s/def ::organisation-id spec/integer?)
+(s/def ::name            spec/string?)
+(s/def ::slug            spec/string?)
+(s/def ::created-by      spec/integer?)
+(s/def ::created-at      spec/inst?)
+(s/def ::updated-by      spec/integer?)
+(s/def ::updated-at      spec/inst?)
+(s/def ::deleted-by      (s/nilable spec/integer?))
+(s/def ::deleted-at      (s/nilable spec/inst?))

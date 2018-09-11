@@ -17,7 +17,7 @@
     (GET "/" []
       :summary    "Returns a list of the user accounts in the organisation."
       :components [db]
-      :return     (s/coll-of ::acc/account)
+      :return     (s/coll-of (s/keys :req-un [::acc/account-id ::acc/email ::acc/name ::acc/created-at]))
       (->> (h/accounts-for-organisation db)
-           (map (partial st/select-spec ::acc/account))
+           (map #(select-keys % [:account-id :email :name :created-at]))
            (response/response)))))
