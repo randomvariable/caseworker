@@ -32,18 +32,30 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
-    <div class="container" style="padding-bottom: 15px;">
+    <div id="main-content" class="container" style="padding-bottom: 15px;">
       <div class="col-md-4 offset-md-4 shadow" style="margin-top: 20vh; background: #f2f2f2; border: 1px solid: 999; border-radius: 10px; padding: 15px; text-align: center;">
         <p>Sign in using your linked Google account by clicking the button below.</p>
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">Sign in</div>
       </div>
     </div>
+
     <footer class="footer">
       <div class="container">
-        <a class="btn btn-default btn-lg" href="https://github.com/caseworker" role="button" target="_blank">
-          <img src="/img/github.svg" style="height: 25px; vertical-align: top;"></a>
+        <a title="Email" class="btn btn-default btn-lg" href="mailto:info@caseworker-oss.org" role="button">
+          <span class="feather icon-mail"></span>
+          <span class="sr-only">Email</span>
+        </a>
+        <a title="Twitter" class="btn btn-default btn-lg" href="https://twitter.com/caseworkeross" role="button" target="_blank">
+          <span class="feather icon-twitter"></span>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a title="Github" class="btn btn-default btn-lg" href="https://github.com/caseworker" role="button" target="_blank">
+          <span class="feather icon-github"></span>
+          <span class="sr-only">Github</span>
+        </a>
       </div>
     </footer>
+
     <script>
       function onSignIn(googleUser) {
         var xhr = new XMLHttpRequest();

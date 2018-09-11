@@ -9,7 +9,7 @@
             [caseworker.people.views :as people]
             [caseworker.reports.views :as reports]
             [caseworker.resources.views :as resources]
-            [caseworker.users.views :as users]))
+            [caseworker.accounts.views :as accounts]))
 
 (defn pages
   [page-name]
@@ -19,7 +19,7 @@
     :cases     [layout/default [cases/page]]
     :resources [layout/default [resources/page]]
     :reports   [layout/default [reports/page]]
-    :users     [layout/default [users/page]]
+    :accounts  [layout/default [accounts/page]]
     [:div]))
 
 (defn show-page

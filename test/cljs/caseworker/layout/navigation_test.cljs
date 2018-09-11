@@ -10,7 +10,7 @@
 (deftest navigation-test
   (testing "collapsible navbar and dropdowns toggle correctly"
     (rf-test/run-test-sync
-      (re-frame/dispatch [:caseworker.events/initialize-db])
+      (re-frame/dispatch [:caseworker.events/initialize])
       (re-frame/dispatch [:caseworker.events/set-current-page :dashboard])
       (let [navbar-expanded? (re-frame/subscribe [::s/navbar-expanded?])
             open-dropdown    (re-frame/subscribe [::s/open-dropdown])

@@ -9,12 +9,12 @@
 
 (defn -main
   []
-  (migrations/migrate!)
+  (migrations/migrate)
   (let [system (component/start (system/make-system c/env))]
     (.addShutdownHook (Runtime/getRuntime)
                       (Thread. ^Runnable #(component/stop system)))
     (println (slurp (io/resource "logo.txt")))
-    (println "...has started. Press Ctrl-C to quit.")))
+    (log/info "Caseworker has started. Press Ctrl-C to quit.")))
 
 (Thread/setDefaultUncaughtExceptionHandler
   (reify Thread$UncaughtExceptionHandler

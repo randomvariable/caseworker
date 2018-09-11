@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [config.core :as c]))
 
-(defn datasource
+(defn database-url->datasource
   [url]
   (let [uri               (java.net.URI. url)
         user-and-password (some-> (.getUserInfo uri) (str/split #":"))]
@@ -17,5 +17,5 @@
 (def env
   (cond-> c/env
     (get c/env :port)                (assoc-in [:jetty :port] (:port c/env))
-    (get c/env :docker-db-port-5432) (assoc-in [:db :port] (:docker-db-port-5432 c/env))
-    (get c/env :database-url)        (assoc-in [:db] (datasource (:database-url c/env)))))
+    (get c/env :database-url)        (assoc-in [:db] (database-url->datasource (:database-url c/env)))
+    (get c/env :docker-db-port-5432) (update-in [:db :subname] (fnil str/replace "") #"5432" (:docker-db-port-5432 c/env))))

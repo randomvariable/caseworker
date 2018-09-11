@@ -1,0 +1,33 @@
+{% extends "templates/_layout.html" %}
+
+{% block main-content %}
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"><img src="/img/logo-with-text.svg" /></a>
+  <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div id="main-content" class="container" style="padding-bottom: 15px;">
+  <div class="col-md-4 offset-md-4 shadow" style="margin-top: 20vh; background: #f2f2f2; border: 1px solid: 999; border-radius: 10px; padding: 15px; text-align: center;">
+    <p>Sign in using your linked Google account by clicking the button below.</p>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">Sign in</div>
+  </div>
+</div>
+
+<script>
+  function onSignIn(googleUser) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/session');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    xhr.onload = function() {
+      if (xhr.status !== 200) {
+        alert('Google sign-in failed - please try again.');
+      } else {
+        window.location = '/' + JSON.parse(xhr.response)['org-code'];
+      }
+    };
+    xhr.send(JSON.stringify({'google-auth-token': googleUser.getAuthResponse().id_token}));
+  };
+</script>
+{% endblock %}

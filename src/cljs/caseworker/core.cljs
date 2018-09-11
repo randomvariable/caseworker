@@ -1,5 +1,6 @@
 (ns caseworker.core
-  (:require [goog.events :as e]
+  (:require [day8.re-frame.http-fx] 
+            [goog.events :as e]
             [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [caseworker.events :as events]
@@ -25,6 +26,6 @@
 (defn ^:export init []
   (init-global-listeners)
   (routes/app-routes)
-  (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::events/initialize])
   (dev-setup)
   (mount-root))

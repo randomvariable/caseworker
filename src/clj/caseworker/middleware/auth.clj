@@ -1,11 +1,12 @@
 (ns caseworker.middleware.auth
-  (:require [caseworker.google-auth :as gauth]))
+  (:require [caseworker.google-auth :as gauth]
+            [taoensso.timbre :as log]))
 
 (defn wrap-auth
   [handler]
-  (fn [{:keys [headers] :as req}]
-    (if-let [user (gauth/verify-token (get headers "CASEWORKER_GOOGLE_AUTH"))]
-      (-> (assoc-in req :identity user)
-          (handler))
-      {:status 401
-       :body  "Not authenticated"})))
+  (fn [{:keys [cookies] :as req}]
+    (if-let [token (get-in cookies ["CASEWORKER_GOOGLE_AUTH" :value])] 
+      (->> (gauth/verify-token token)
+           (assoc req :identity)
+           (handler))
+      (handler req))))

@@ -37,8 +37,7 @@
     "type": "source",
     "template": [
       "(ns {dot|hyphenate}",
-      "  (:require [msc.util :as u]",
-      "            [taoensso.timbre :as log]))",
+      "  (:require [taoensso.timbre :as log]))",
       ""
     ]
   },

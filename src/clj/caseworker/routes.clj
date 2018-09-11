@@ -2,12 +2,14 @@
   (:require [compojure.api.core :refer [route-middleware]]
             [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE context undocumented]]
             [compojure.route :as route]
+            [caseworker.api.account.routes :as accounts]
             [caseworker.api.session.routes :as sessions]
-            [caseworker.google-auth :as gauth]
+            [caseworker.config :as c]
             [caseworker.middleware.auth :as auth]
             [caseworker.spec.organisation :as org]
             [ring.middleware.cookies :as cookies]
-            [ring.util.response :as response]))
+            [ring.util.response :as response]
+            [selmer.parser :as selmer]))
 
 (defn routes
   [system]
@@ -21,11 +23,13 @@
                       :consumes ["application/json"]
                       :produces ["application/json"]}}}
 
-    (route-middleware [cookies/wrap-cookies]
+    (route-middleware
+      [cookies/wrap-cookies
+       auth/wrap-auth]
 
-      (context "/api" []
-        #'sessions/session-routes
-        (route-middleware [auth/wrap-auth]))
+      (context "/api" [:as req]
+        #'accounts/account-routes
+        #'sessions/session-routes)
 
       (undocumented
 
@@ -33,18 +37,21 @@
           (response/redirect "/login"))
 
         (GET "/login" [:as req]
-          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
+          (if (:identity req)
             (response/redirect "/wmag")
-            (response/resource-response "login.html" {:root "public"})))
+            (-> (selmer/render-file "templates/login.html" (select-keys c/env [:google-client-id]))
+                (response/response))))
 
         (GET "/health" []
           (response/response "OK"))
 
+        (route/resources "/")
+
         (GET "/:org-code" [:as req]
           :path-params [org-code :- ::org/org-code]
-          (if (gauth/verify-token (get-in req [:cookies "CASEWORKER_GOOGLE_AUTH" :value]))
-            (response/resource-response "index.html" {:root "public"})
-            (response/redirect "/login")))
+          (if (:identity req)
+            (-> (selmer/render-file "templates/index.html" (select-keys c/env [:google-client-id]))
+                (response/response))
+            (response/resource-response "401.html" {:root "public"})))
 
-        (route/resources "/")
         (route/not-found "404 Not found")))))

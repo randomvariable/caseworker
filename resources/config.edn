@@ -1,10 +1,8 @@
-{:db {:host        "localhost"
-      :port        "5432"
-      :dbtype      "postgresql"
-      :dbname      "caseworker"
-      :classname   "org.postgresql.Driver"
+{:db {:classname   "org.postgresql.Driver"
+      :subprotocol "postgresql"
       :user        "caseworker"
-      :password    "password"}
+      :password    "password"
+      :subname     "//localhost:5432/caseworker"}
  :environment "development"
  :google-client-id "174928214934-m0rbjmumbsa0p5ubtuq7ljpe60evoen9.apps.googleusercontent.com"
  :jetty {:port 9000}}

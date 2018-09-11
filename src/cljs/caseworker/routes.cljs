@@ -35,7 +35,8 @@
   (defroute "/reports" []
     (re-frame/dispatch [::events/set-current-page :reports]))
 
-  (defroute "/users" []
-    (re-frame/dispatch [::events/set-current-page :users]))
+  (defroute "/accounts" []
+    (re-frame/dispatch-sync [:caseworker.accounts.events/initialize])
+    (re-frame/dispatch [::events/set-current-page :accounts]))
 
   (hook-browser-navigation!))

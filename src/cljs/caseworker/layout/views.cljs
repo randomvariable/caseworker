@@ -18,13 +18,36 @@
 
 (defn main-nav
   []
-  (with-subs [current-page [::s/current-page]]
+  (with-subs [current-page [:caseworker.subs/current-page]]
     [:ul.navbar-nav.mr-auto
      [nav-item current-page :dashboard "/"          "icon-home"        "Dashboard"]
      [nav-item current-page :people    "/people"    "icon-users"       "People"]
      [nav-item current-page :cases     "/cases"     "icon-briefcase"   "Cases"]
      [nav-item current-page :resources "/resources" "icon-file"        "Resources"]
      [nav-item current-page :reports   "/reports"   "icon-bar-chart-2" "Reports"]]))
+
+(defn user-menu
+  []
+  (with-subs [current-user  [:caseworker.subs/current-user]
+              open-dropdown [::s/open-dropdown]]
+    (when current-user
+      [:div.dropdown-menu.dropdown-menu-right
+       {:class (when (= open-dropdown :account) "show")
+        :style {:min-width "200px" :white-space "nowrap"}}
+       [:span.dropdown-item-text (:name current-user)]
+       [:span.dropdown-item-text "Walthamstow Migrants' Action Group"]
+       [:div.dropdown-divider]
+       [:a.dropdown-item {:href "#/accounts"} [:span.feather.icon-users] " Manage users"]
+       [:a.dropdown-item {:href "#" :on-click gauth/logout} [:span.feather.icon-log-out] " Log out"]])))
+
+(defn settings-menu
+  []
+  (with-subs [open-dropdown [::s/open-dropdown]]
+    [:div.dropdown-menu.dropdown-menu-right
+     (when (= open-dropdown :settings) {:class "show"})
+     [:a.dropdown-item {:href "#"} "Action"]
+     [:a.dropdown-item {:href "#"} "Another action"]
+     [:a.dropdown-item {:href "#"} "Something else here"]]))
 
 (defn navbar
   []
@@ -53,11 +76,7 @@
                          (.preventDefault %))
           :href "#"}
          [:span.feather.icon-settings] [:span.d-inline.d-sm-inline.d-md-none " Settings"]]
-        [:div.dropdown-menu.dropdown-menu-right
-         (when (= open-dropdown :settings) {:class "show"})
-         [:a.dropdown-item {:href "#"} "Action"]
-         [:a.dropdown-item {:href "#"} "Another action"]
-         [:a.dropdown-item {:href "#"} "Something else here"]]]
+        [settings-menu]]
        [:li.nav-item.dropdown 
         [:a#dropdown01.nav-link.dropdown-toggle
          {:aria-expanded "false"
@@ -68,14 +87,7 @@
                          (.preventDefault %))
           :href "#"}
          [:span.feather.icon-user] [:span.d-inline.d-sm-inline.d-md-none " Account"]]
-        [:div.dropdown-menu.dropdown-menu-right
-         {:class (when (= open-dropdown :account) "show")
-          :style {:min-width "200px" :white-space "nowrap"}}
-         [:span.dropdown-item-text "Russell Dunphy"]
-         [:span.dropdown-item-text "Walthamstow Migrants' Action Group"]
-         [:div.dropdown-divider]
-         [:a.dropdown-item {:href "#/users"} [:span.feather.icon-users] " Manage users"]
-         [:a.dropdown-item {:href "#" :on-click gauth/logout} [:span.feather.icon-log-out] " Log out"]]]]]]))
+        [user-menu]]]]]))
 
 (defn default [& forms]
   [:div#main-content [navbar] (into [:div.container-fluid{:style {:height "100%"}}] forms)])

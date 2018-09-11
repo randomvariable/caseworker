@@ -1,14 +1,22 @@
 (ns caseworker.api.session.routes
   (:require [compojure.api.sweet :as compojure :refer [GET POST PUT DELETE defroutes context]]
             [caseworker.config :as c]
+            [caseworker.spec.account :as account]
             [caseworker.spec.organisation :as org]
             [caseworker.spec.session :as session]
+            [clojure.spec.alpha :as s]
             [ring.util.response :as response]
             [taoensso.timbre :as log]))
 
 (defroutes session-routes
   (context "/session" []
     :tags ["Sessions"]
+
+    (GET "/" [:as request]
+      :summary "Return the current user's session"
+      :return  (s/keys :req-un [::account/name ::account/email])
+      (-> (:identity request)
+          (response/response)))
 
     (POST "/" []
       :summary "Create a new session using a google auth token"

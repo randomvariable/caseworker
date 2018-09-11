@@ -18,8 +18,7 @@
   [token]
   "Returns GoogleTokenId instance if the token is valid"
   (when-let [payload (some->> token (.verify token-verifier) .getPayload)]
-    {:email      (get payload "email")
-     :first-name (get payload "given_name")
-     :last-name  (get payload "family_name")
-     :picture    (get payload "picture")
-     :locale     (get payload "locale")}))
+    {:subject  (.getSubject payload)
+     :email    (get payload "email")
+     :name     (str (get payload "given_name") " " (get payload "family_name"))
+     :locale   (get payload "locale")}))

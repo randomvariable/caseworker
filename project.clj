@@ -10,6 +10,7 @@
                  [compojure "1.6.1"]
                  [com.google.api-client/google-api-client "1.25.0"]
                  [com.google.oauth-client/google-oauth-client "1.25.0"]
+                 [day8.re-frame/http-fx "0.1.6"]
                  [expound "0.7.1"]
                  [metosin/compojure-api "2.0.0-alpha25"]
                  [metosin/spec-tools "0.7.1"]
@@ -26,6 +27,7 @@
                  [ring "1.6.3"]
                  [ring-jetty-component "0.3.1"]
                  [secretary "1.2.3"]
+                 [selmer "1.12.0"]
                  [venantius/accountant "0.2.4"]
                  [yogthos/config "1.1.1"]
 
@@ -52,6 +54,7 @@
                                   [day8.re-frame/test "0.1.5"]
                                   [figwheel-sidecar "0.5.16"]
                                   [org.clojure/test.check "0.10.0-alpha3"]
+                                  [org.clojure/tools.nrepl "0.2.13"]
                                   [reloaded.repl "0.2.4"]
                                   [re-frisk "0.5.4"]
                                   [ring/ring-mock "0.3.2"]]

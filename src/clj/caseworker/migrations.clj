@@ -7,10 +7,10 @@
   {:datastore  (jdbc/sql-database (c/env :db))
    :migrations (jdbc/load-resources "migrations")})
 
-(defn migrate!
+(defn migrate
   []
   (ragtime/migrate config))
 
-(defn rollback!
+(defn rollback
   []
   (ragtime/rollback config))

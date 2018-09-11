@@ -19,8 +19,3 @@
  :<- [::db]
  (fn [db _]
    (:open-dropdown db)))
-
-(re-frame/reg-sub
-  ::current-page
-  (fn [db _]
-    (:current-page db)))
